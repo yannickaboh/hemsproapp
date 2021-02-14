@@ -18,7 +18,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import get_template
  
 #import render_to_pdf from util.py 
-from .utils import render_to_pdf, get_ip
+from .utils import get_ip
 
 # For printing
 #from weasyprint import HTML

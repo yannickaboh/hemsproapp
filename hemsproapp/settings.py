@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'import_export',
 
-    'website.apps.WebsiteConfig',
+    'website',
 ]
 
 MIDDLEWARE = [
