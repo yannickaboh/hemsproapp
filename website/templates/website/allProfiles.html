@@ -1,0 +1,399 @@
+{% extends 'website/base.html' %}
+
+
+{% load static %}
+
+{% block title %}Listing de tous les Profils{% endblock %}
+
+{% block page_titre %}Listing de tous les Profils{% endblock %}
+
+{% block sub_page %}Listing de tous les Profils{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Rechercher un Profil</h4>
+                    <form method="get" action="{% url 'searchProfile' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="matricule">Matricule</label>
+                                    <input type="text" class="form-control" placeholder="Matricule" name="matricule">
+                                    <small class="text-muted">Matricule</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="poste">Poste</label>
+                                    <select class="form-control" name="poste">
+                                        {% if postes %}
+                                            {% for post in postes %}
+                                            <option value="{{ post.libelle }}">{{ post.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucun poste enregistré</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Poste occupé</small>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Importer | Export</h4>
+                    <form method="post"  enctype="multipart/form-data" action="{% url 'importDataProfile' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="myfile">Mon Fichier CSV</label>
+
+                            <input type="file" class="form-control" placeholder="Choisir le fichier csv" name="myfile">
+
+                            <small class="text-muted">
+                                Veuillez uploader un fichier csv s'il vous plaît de peur d'obtenir un bug !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importer des données</button>
+                        <a href="{% url 'exportProfileCSV' %}" class="btn btn-warning">Export en CSV</a>
+                        <a href="{% url 'exportProfileXLS' %}" class="btn btn-warning">Export en XLS</a>
+                        <a href="{% url 'exportProfilePDF' %}" class="btn btn-warning">Export en PDF</a>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card-box">
+            <h4 class="header-title">Listing des Profils</h4>
+            <p class="sub-header">
+                Les différents Profils du système sont répertoriés à cet endroit et permettent de connaitre les droits d'accès des utilisateurs du système.
+            </p>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Avatar</th>
+                        <th>Noms & Prénoms</th>
+                        <th>Poste</th>
+                        <th>Matricule</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for profile in profiles %}
+                    <tr>
+                        <th scope="row">{{ profile.pk }}</th>
+                        <td>
+                            <img src="{{ profile.avatar.url }}" style="border-radius: 50%; height: 25px;width: 25px;">
+                        </td>
+                        <td>{{ profile.user.last_name }} &nbsp; {{ profile.user.first_name }}</td>
+                        <td>{{ profile.poste }}</td>
+                        <td>{{ profile.matricule }}</td>
+                        <td>
+                            <a href="{% url 'checkProfil' profile.pk %}" class="btn btn-xs btn-info">
+                                <i class=" mdi mdi-ubuntu"></i>
+                            </a>
+                            <a href="{% url 'updateProfil' profile.pk %}" class="btn btn-xs btn-warning">
+                                <i class=" mdi mdi-pencil-off-outline"></i>
+                            </a>
+                            <a href="{% url 'desactivateProfil' profile.pk %}" class="btn btn-xs btn-danger">
+                                <i class=" mdi mdi-police-badge"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <br>
+
+
+                {% if profiles.has_other_pages %}
+                <nav>
+                    <ul class="pagination">
+                        {% if profiles.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ profiles.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in profiles.paginator.page_range %}
+                            {% if profiles.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if profiles.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ profiles.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link disabled" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+        
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+    	<div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Formulaire d'ajout d'un Nouveau Profil</h4>
+                    {% if messages %}
+			            {% for message in messages %}
+			            <div class="alert alert-{{ message.tags }}" role="alert">
+			                {{ message }}
+			            </div><br>
+			            {% endfor %}
+			        {% endif %}
+                    <form method="post" action="{% url 'createProfil' %}">
+                    	{% csrf_token %}
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="pseudo">Pseudo</label>
+                                    <input type="text" class="form-control" placeholder="Pseudo" name="pseudo">
+                                    <small class="text-muted">Pseudo</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="password">Mot de passe</label>
+                                    <input type="password" class="form-control" placeholder="Mot de passe" name="password">
+                                    <small class="text-muted">Mot de passe</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="noms">Noms</label>
+                                    <input type="text" class="form-control" placeholder="Noms" name="noms">
+                                    <small class="text-muted">Noms</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="prenoms">Prénoms</label>
+                                    <input type="text" class="form-control" placeholder="Prénoms" name="prenoms">
+                                    <small class="text-muted">Prénoms</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" placeholder="Email" name="email">
+                                    <small class="text-muted">Email</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="matricule">Matricule</label>
+                                    <input type="text" class="form-control" placeholder="Matricule" name="matricule">
+                                    <small class="text-muted">Matricule</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="telephone">Téléphone</label>
+                                    <input type="text" class="form-control" placeholder="Téléphone" name="telephone">
+                                    <small class="text-muted">Téléphone</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="adresse">Adresse</label>
+                                    <input type="text" class="form-control" placeholder="Adresse" name="adresse">
+                                    <small class="text-muted">Adresse</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="nationalite">Nationalité</label>
+                                    <input type="text" class="form-control" placeholder="Nationalité" name="nationalite">
+                                    <small class="text-muted">Nationalité</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="quartier">Quartier</label>
+                                    <input type="text" class="form-control" placeholder="Quartier" name="quartier">
+                                    <small class="text-muted">Quartier</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="ville">Ville</label>
+                                    <input type="text" class="form-control" placeholder="Ville" name="ville">
+                                    <small class="text-muted">Ville</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="poste">Poste</label>
+                                    <select class="form-control" name="poste">
+                                        {% if postes %}
+                                            {% for post in postes %}
+                                            <option value="{{ post.libelle }}">{{ post.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucun poste enregistré</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Poste occupé</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="site">Site rattaché</label>
+                                    <select class="form-control" name="site">
+                                        {% if sites %}
+                                            {% for sit in sites %}
+                                            <option value="{{ sit.libelle }}">{{ sit.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucun site enregistré</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Site rattaché</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="compagnie">Compagnie rattaché</label>
+                                    <select class="form-control" name="compagnie">
+                                        {% if compagnies %}
+                                            {% for compagnie in compagnies %}
+                                            <option value="{{ compagnie.libelle }}">{{ compagnie.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucune compagnie enregistrée</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Compagnie</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="groupe">Droits d'accès</label>
+                                    <select class="form-control" name="groupe">
+                                        {% if groupes %}
+                                            {% for groupe in groupes %}
+                                            <option value="{{ groupe.name }}">{{ groupe.name }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucune droit d'accès enregistrée</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Droits d'accès</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="statut">Statut</label>
+                                    <select class="form-control" name="statut">
+                                        <option>En service</option>
+                                        <option>En mission</option>
+                                        <option>En congé</option>
+                                        <option>En convalescence</option>
+                                        <option>En arrêt</option>
+                                    </select>
+                                    <small class="text-muted">Statut</small>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                            
+                        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+</div>
+<!--- end row -->
+
+
+
+{% endblock %}

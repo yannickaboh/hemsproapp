@@ -1,0 +1,147 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<!-- Mirrored from coderthemes.com/uplon/layouts/vertical/pages-invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Dec 2020 21:55:18 GMT -->
+<head>
+        <meta charset="utf-8" />
+        <title>HEMSPRO APP | {% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'website/login/assets/images/hems2.png' %}">
+
+        <!-- App css -->
+        <link href="{% static 'website/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
+        <link href="{% static 'website/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'website/assets/css/app.min.css' %}" rel="stylesheet" type="text/css"  id="app-stylesheet" />
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box">
+                                    <!-- <div class="panel-heading">
+                                        <h4>Invoice</h4>
+                                    </div> -->
+                                    <div class="panel-body">
+                                        <div class="clearfix">
+                                            <div class="float-sm-left">
+                                                <h4 class="text-uppercase mt-0"> </h4>
+                                                <span class="logo-lg">
+                                                    <img src="{% static 'website/login/assets/images/hems2.png' %}" alt="" height="90">
+                                                    <span class="logo-lg-text-dark"><strong>HEMSPRO</strong></span>
+                                                </span>
+                                            </div>
+                                            <div class="float-sm-right mt-4 mt-sm-0">
+                                                <address>
+                                                    <strong>Maintenance Engins Lourds.</strong><br>
+                                                    5ème étage, Immeuble FINAM en ville<br>
+                                                    Libreville, GABON<br>
+                                                    <abbr title="Contacts"></abbr> (+241) 074 83 56 31
+                                                </address>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="float-sm-left mt-12">
+                                                    <address>
+                                                        <strong><h2>Listing des compagnies.</h2></strong>
+                                                    </address>
+                                                </div>
+                                            </div><!-- end col -->
+                                        </div>
+                                        <!-- end row -->
+
+                                        <div class="row mt-4">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-nowrap">
+                                                        <thead>
+                                                          <tr>
+                                                            <th style="text-align: center;">#</th>
+                                                            <th style="text-align: center;">Libellé</th>
+                                                            <th style="text-align: center;">Téléphone</th>
+                                                            <th style="text-align: center;">Email</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>.
+                                                        {% for compagnie in compagnies %}
+                                                        <tr>
+                                                            <td style="text-align: center;">{{ compagnie.id }}</td>
+                                                            <td style="text-align: center;">{{ compagnie.libelle }}</td>
+                                                            <td style="text-align: center;">{{ compagnie.telephone }}</td>
+                                                            <td style="text-align: center;">{{ compagnie.email }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="d-print-none">
+                                            <div class="float-right">
+                                                <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- end container-fluid -->
+
+                </div> <!-- end content -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+        <!-- Vendor js -->
+        <script src="{% static 'website/assets/js/vendor.min.js' %}"></script>
+
+        <!--Morris Chart-->
+        <script src="{% static 'website/assets/libs/morris-js/morris.min.js' %}"></script>
+        <script src="{% static 'website/assets/libs/raphael/raphael.min.js' %}"></script>
+
+        <!-- Dashboard init js-->
+        <script src="{% static 'website/assets/js/pages/dashboard.init.js' %}"></script>
+
+        <!-- App js -->
+        <script src="{% static 'website/assets/js/app.min.js' %}"></script>
+        
+    </body>
+
+<!-- Mirrored from coderthemes.com/uplon/layouts/vertical/pages-invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Dec 2020 21:55:18 GMT -->
+</html>

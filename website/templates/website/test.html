@@ -1,0 +1,22 @@
+{% extends 'website/base.html' %}
+
+
+{% load static %}
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-12">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div><br>
+            {% endfor %}
+        {% endif %} 
+    </div>
+</div>
+
+{% endblock %}

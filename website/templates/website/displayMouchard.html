@@ -1,0 +1,76 @@
+{% extends 'website/base.html' %}
+
+{% load humanize %}
+
+{% load static %}
+
+{% load website_extras %}
+
+{% block title %}Listing de toutes les actions Système{% endblock %}
+
+{% block page_titre %}Listing de toutes les actions Système{% endblock %}
+
+{% block sub_page %}Listing de toutes les actions Système{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="timeline" dir="ltr">
+            <article class="timeline-item alt">
+                <div class="text-right">
+                    <div class="time-show first">
+                        <a href="#" class="btn btn-danger width-lg">
+                            MOUCHARD
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            {% for moucharde in allMouchards %}
+
+
+
+            {% if forloop.counter|divisibleby:2 %}
+            <article class="timeline-item">
+                <div class="timeline-desk">
+                    <div class="panel">
+                        <div class="timeline-box">
+                            <span class="arrow-alt"></span>
+                            <span class="timeline-icon bg-danger"><i class="mdi mdi-circle"></i></span>
+                            <h4 class="text-danger"><strong>{{ moucharde.created|naturaltime }}</strong></h4>
+                            <p class="timeline-date text-muted"><small>Action N°/ <strong>{{ moucharde.id }}</strong></small></p>
+                            <p><strong>{{ moucharde.action }}</strong> </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% else %}
+            <article class="timeline-item alt">
+                <div class="timeline-desk">
+                    <div class="panel">
+                        <div class="timeline-box">
+                            <span class="arrow-alt"></span>
+                            <span class="timeline-icon bg-danger"><i class="mdi mdi-circle"></i></span>
+                            <h4 class="text-danger"><strong>{{ moucharde.created|naturaltime }}</strong></h4>
+                            <p class="timeline-date text-muted"><small>Action N°/ <strong>{{ moucharde.id }}</strong></small></p>
+                            <p><strong>{{ moucharde.action }}</strong> </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+
+{% endblock %}

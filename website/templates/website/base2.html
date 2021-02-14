@@ -1,0 +1,56 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="fr">
+    
+<!-- HEMSPRO APP -->
+<head>
+        <meta charset="utf-8" />
+        <title>HEMSPRO APP | {% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'website/login/assets/images/hems2.png' %}">
+
+        <!-- App css -->
+        <link href="{% static 'website/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
+        <link href="{% static 'website/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'website/assets/css/app.min.css' %}" rel="stylesheet" type="text/css"  id="app-stylesheet" />
+
+    </head>
+
+    <body>
+
+        
+
+        
+
+        <!-- Vendor js -->
+        <script src="{% static 'website/assets/js/vendor.min.js' %}"></script>
+
+        <!--Morris Chart-->
+        <script src="{% static 'website/assets/libs/morris-js/morris.min.js' %}"></script>
+        <script src="{% static 'website/assets/libs/raphael/raphael.min.js' %}"></script>
+
+        <!-- Dashboard init js-->
+        <script src="{% static 'website/assets/js/pages/dashboard.init.js' %}"></script>
+
+        <!-- App js -->
+        <script src="{% static 'website/assets/js/app.min.js' %}"></script>
+
+        <!-- Manage Alerts -->
+        <script type="text/javascript">
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 2000);
+        </script>
+        
+    </body>
+
+<!-- Mirrored from coderthemes.com/uplon/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Dec 2020 21:55:10 GMT -->
+</html>

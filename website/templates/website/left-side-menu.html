@@ -1,0 +1,179 @@
+{% load static %}
+
+<div class="left-side-menu">
+
+    <div class="slimscroll-menu">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul class="metismenu" id="side-menu">
+
+                <li class="menu-title">Navigation</li>
+
+                <li>
+                    <a href="index.html">
+                        <i class="mdi mdi-view-dashboard"></i>
+                        <span> Dashboard </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="mdi mdi-calendar-month"></i>
+                        <span> Calendrier </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-flip-horizontal"></i>
+                        <span> Comptes </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{% url 'allProfiles' %}">Profils</a></li>
+                        <li><a href="{% url 'allGroupes' %}">Groupes</a></li>
+                        <li><a href="{% url 'allPostes' %}">Postes</a></li>
+                        <li><a href="{% url 'allPresencesBySite' %}">
+                        Fiches de présence 
+                        <span class="badge badge-danger badge-pill float-right" style="background-color: purple;">0</span>
+                        </a></li>
+                    </ul>
+                </li>
+    
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-google-pages"></i>
+                        <span> Entités </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{% url 'allSites' %}">
+                                Sites 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'allCompagnies' %}">
+                                Compagnies
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-content-copy"></i>
+                        <span> Mécanique</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="pages-timeline.html">Modèles</a></li>
+                        <li><a href="pages-invoice.html">
+                            Engins 
+                            <span class="badge badge-danger badge-pill float-right" style="background-color: green;">0</span>
+                        </a></li>
+                        <li>
+                            <a href="pages-pricing.html">
+                                Interventions
+                                <span class="badge badge-danger badge-pill float-right" style="background-color: red;">0</span>
+                            </a>
+                        </li>
+                        <li><a href="pages-gallery.html">Types intervention</a></li>
+                        <li><a href="ui-cards.html">Conso. Carburant</a></li>
+                        <li><a href="ui-cards.html">La Flotte</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-format-underline"></i>
+                        <span> Matériel</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="pages-timeline.html">Demandes</a></li>
+                        <li><a href="pages-invoice.html">Envois</a></li>
+                        <li><a href="pages-pricing.html">Pièces</a></li>
+                        <li><a href="pages-gallery.html">Catégories</a></li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-format-underline"></i>
+                        <span> Rapports </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="ui-buttons.html">Voyages</a></li>
+                        <li><a href="ui-dropdowns.html">Activités</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-package-variant-closed"></i>
+                        <span> Fiches </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="components-grid.html">QHSE Chauffeurs</a></li>
+                        <li><a href="components-range-sliders.html">QHSE Engins</a></li>
+                        <li><a href="components-sweet-alert.html">Evaluations Hebdo.</a></li>
+                        <li><a href="components-ratings.html">Evaluations Journalières</a></li>
+                        <li><a href="components-treeview.html">Interventions Hors Site</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-puzzle-outline"></i>
+                        <span> Communication </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="widgets-tiles.html">
+                            Notifications 
+                            <span class="badge badge-danger badge-pill float-right" style="background-color: blue;">0</span>
+                        </a></li>
+                        <li><a href="widgets-charts.html">
+                            Tâches 
+                            <span class="badge badge-danger badge-pill float-right" style="background-color: orange;">0</span>
+                        </a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title mt-2">Options</li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-puzzle-outline"></i>
+                        <span> Support </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{% url 'displayMouchard' %}">
+                                Mouchard
+                                <span class="spinner-grow text-primary float-right" role="status"></span>
+                            </a>
+                        </li>
+                        <li><a href="widgets-tiles.html">Aide</a></li>
+                        <li><a href="widgets-charts.html">Signaler un bug</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>

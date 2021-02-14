@@ -1,0 +1,335 @@
+{% extends 'website/base.html' %}
+
+
+{% load static %}
+
+{% block title %}Modifier un Profil{% endblock %}
+
+{% block page_titre %}Modifier un Profil{% endblock %}
+
+{% block sub_page %}Modifier un Profil{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="card-box">
+            <h4 class="header-title">Profil de Mr/Mlle <a>{{ profile.user.last_name }} &nbsp; {{ profile.user.first_name }}</a></h4>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div><br>
+                {% endfor %}
+            {% endif %}
+            <p class="sub-header">
+                Les détails liés à un profil sont présentés ici. Mais si toutefois vous désirez retourner à la liste des profils, veuillez juste cliquer sur ce lien : <a href="{% url 'allProfiles' %}">Liste des profils</a>
+            </p>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Avatar</th>
+                        <th>Noms & Prénoms</th>
+                        <th>Poste</th>
+                        <th>Matricule</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <th scope="row">{{ profile.pk }}</th>
+                        <td>
+                            <img src="{{ profile.avatar.url }}" style="border-radius: 50%; height: 25px;width: 25px;">
+                        </td>
+                        <td>{{ profile.user.last_name }} &nbsp; {{ profile.user.first_name }}</td>
+                        <td>{{ profile.poste }}</td>
+                        <td>{{ profile.matricule }}</td>
+                        <td>
+                            <a href="{% url 'checkProfil' profile.pk %}" class="btn btn-xs btn-info">
+                                <i class=" mdi mdi-ubuntu"></i>
+                            </a>
+                            <a href="{% url 'updateProfil' profile.pk %}" class="btn btn-xs btn-warning">
+                                <i class=" mdi mdi-pencil-off-outline"></i>
+                            </a>
+                            <a href="{% url 'desactivateProfil' profile.pk %}" class="btn btn-xs btn-danger">
+                                <i class=" mdi mdi-police-badge"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Changer Mot de Passe</h4>
+                    <form method="post" action="{% url 'updatePassword' profile.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <input type="password" class="form-control" placeholder="Nouveau Mot de Passe" name="new_password">
+                            <small class="text-muted">Nouveau Mot de Passe</small>
+
+                            <br><br>
+
+                            <input type="password" class="form-control" placeholder="Confirmation Mot de Passe" name="confirm_password">
+                            <small class="text-muted">Confirmation Mot de Passe</small>
+                            <br><br>
+
+                            <small class="text-muted">Veuillez eviter de saisir avec des erreurs en prenant la peine de vérifier votre texte avant de valider svp !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+                        <br><br>
+
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Votre Avatar</h4>
+                    <img src="{{ profile.avatar.url }}" style="border-radius: 50%;height: 90px;width: 90px;">
+                    <form method="post"  enctype="multipart/form-data" action="{% url 'updateAvatar' profile.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <input type="file" class="form-control" placeholder="Choisir l'image" name="avatar">
+                            <small class="text-muted">Avatar</small>
+                            <br>
+
+                            <input type="checkbox" value="oui" name="delete_old_avatar">
+                            <small class="text-muted">Supprimer ancienne image ?</small>
+                            <br>
+
+                            <small class="text-muted">
+                                Veuillez uploader un fichier pas trop volumineux (moins de 1Mo) !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+    <div class="col-lg-12">
+    	<div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Formulaire de modification du Profil "{{ profile.user.username }}"</h4>
+                    <form method="post">
+                    	{% csrf_token %}
+
+                        <input type="hidden" class="form-control" value="{{ profile.pk }}" name="pk">
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="pseudo">Pseudo</label>
+                                    <input type="text" class="form-control" value="{{ profile.user.username }}" placeholder="Pseudo" name="pseudo">
+                                    <small class="text-muted">Pseudo</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="noms">Noms</label>
+                                    <input type="text" class="form-control" value="{{ profile.user.last_name }}" placeholder="Noms" name="noms">
+                                    <small class="text-muted">Noms</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="prenoms">Prénoms</label>
+                                    <input type="text" class="form-control" value="{{ profile.user.first_name }}" placeholder="Prénoms" name="prenoms">
+                                    <small class="text-muted">Prénoms</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" value="{{ profile.user.email }}" placeholder="Email" name="email">
+                                    <small class="text-muted">Email</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="matricule">Matricule</label>
+                                    <input type="text" class="form-control" value="{{ profile.matricule }}" placeholder="Matricule" name="matricule">
+                                    <small class="text-muted">Matricule</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="telephone">Téléphone</label>
+                                    <input type="text" class="form-control" value="{{ profile.telephone }}" placeholder="Téléphone" name="telephone">
+                                    <small class="text-muted">Téléphone</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="adresse">Adresse</label>
+                                    <input type="text" class="form-control" value="{{ profile.adresse }}" placeholder="Adresse" name="adresse">
+                                    <small class="text-muted">Adresse</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="nationalite">Nationalité</label>
+                                    <input type="text" class="form-control" value="{{ profile.nationalite }}" placeholder="Nationalité" name="nationalite">
+                                    <small class="text-muted">Nationalité</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="quartier">Quartier</label>
+                                    <input type="text" class="form-control" value="{{ profile.quartier }}" placeholder="Quartier" name="quartier">
+                                    <small class="text-muted">Quartier</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="ville">Ville</label>
+                                    <input type="text" class="form-control" value="{{ profile.ville }}" placeholder="Ville" name="ville">
+                                    <small class="text-muted">Ville</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="poste">Poste</label>
+                                    <select class="form-control" name="poste">
+                                        {% if postes %}
+                                            {% for post in postes %}
+                                            <option value="{{ post.libelle }}">{{ post.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucun poste enregistré</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Poste occupé</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="site">Site rattaché</label>
+                                    <select class="form-control" name="site">
+                                        {% if sites %}
+                                            {% for sit in sites %}
+                                            <option value="{{ sit.libelle }}">{{ sit.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucun site enregistré</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Site rattaché</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="compagnie">Compagnie rattaché</label>
+                                    <select class="form-control" name="compagnie">
+                                        {% if compagnies %}
+                                            {% for compagnie in compagnies %}
+                                            <option value="{{ compagnie.libelle }}">{{ compagnie.libelle }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucune compagnie enregistrée</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Compagnie</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="groupe">Droits d'accès</label>
+                                    <select class="form-control" name="groupe">
+                                        {% if groupes %}
+                                            {% for groupe in groupes %}
+                                            <option value="{{ groupe.name }}">{{ groupe.name }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                        <option>Aucune droit d'accès enregistrée</option>
+                                        {% endif %}
+                                    </select>
+                                    <small class="text-muted">Droits d'accès</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="statut">Statut</label>
+                                    <select class="form-control" name="statut">
+                                        <option>En service</option>
+                                        <option>En mission</option>
+                                        <option>En congé</option>
+                                        <option>En convalescence</option>
+                                        <option>En arrêt</option>
+                                    </select>
+                                    <small class="text-muted">Statut</small>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                            
+                        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+</div>
+<!--- end row -->
+
+
+
+{% endblock %}

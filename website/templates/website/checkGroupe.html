@@ -1,0 +1,185 @@
+{% extends 'website/base.html' %}
+
+
+{% load static %}
+
+{% block title %}Consulter un Groupe{% endblock %}
+
+{% block page_titre %}Consulter un Groupe{% endblock %}
+
+{% block sub_page %}Consulter un Groupe{% endblock %}
+
+
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Rechercher un Groupe</h4>
+                    <form method="get" action="{% url 'searchGroup' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="libelle">Libellé</label>
+
+                            <input type="text" class="form-control" placeholder="Libellé" name="name">
+
+                            <small class="text-muted">Veuillez eviter de saisir avec des erreurs en prenant la peine de vérifier votre texte avant de valider svp !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Importer | Export</h4>
+                    <form method="post"  enctype="multipart/form-data" action="{% url 'importDataGroup' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="myfile">Mon Fichier CSV</label>
+
+                            <input type="file" class="form-control" placeholder="Choisir le fichier csv" name="myfile">
+
+                            <small class="text-muted">
+                                Veuillez uploader un fichier csv s'il vous plaît de peur d'obtenir un bug !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importer des données</button>
+                        <a href="{% url 'exportCSV' %}" class="btn btn-warning">Export en CSV</a>
+                        <a href="{% url 'exportXLS' %}" class="btn btn-warning">Export en XLS</a>
+                        <a href="{% url 'exportPDF' %}" class="btn btn-warning">Export en PDF</a>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card-box">
+            <h4 class="header-title">Consulter un Groupe</h4>
+            <p class="sub-header">
+                Les différents <a href="{% url 'allGroupes' %}">groupes</a> du système sont répertoriés à cet endroit et permettent de connaitre les droits d'accès des utilisateurs du système. cliquer <a href="{% url 'allGroupes' %}">ici</a> pour retourner à la liste
+            </p>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Libelle</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for groupe in groupes %}
+                    <tr>
+                        <th scope="row">{{ groupe.id }}</th>
+                        <td>{{ groupe.name }}</td>
+                        <td>
+                            <a href="{% url 'checkGroupe' groupe.id %}" class="btn btn-xs btn-info">
+                                <i class=" mdi mdi-ubuntu"></i>
+                            </a>
+                        	<a href="{% url 'updateGroupe' groupe.id %}" class="btn btn-xs btn-warning">
+                        		<i class=" mdi mdi-pencil-off-outline"></i>
+                        	</a>
+                            <a href="{% url 'desactivateGroupe' groupe.id %}" class="btn btn-xs btn-danger">
+                                <i class=" mdi mdi-police-badge"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <br>
+
+
+                {% if groupes.has_other_pages %}
+                <nav>
+                    <ul class="pagination">
+                        {% if groupes.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ groupes.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in groupes.paginator.page_range %}
+                            {% if groupes.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if groupes.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ groupes.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link disabled" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+    	<div class="row">
+            <div class="col-12">
+
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Détail du Groupe</h4>
+                    <p>
+                        <strong>{{ groupe.name }}</strong>
+                    </p>
+                </div>
+
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+</div>
+<!--- end row -->
+
+
+
+{% endblock %}

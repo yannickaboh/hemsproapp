@@ -1,0 +1,242 @@
+{% extends 'website/base.html' %}
+
+
+{% load static %}
+
+{% block title %}Listing de tous les Compagnies{% endblock %}
+
+{% block page_titre %}Listing de tous les Compagnies{% endblock %}
+
+{% block sub_page %}Listing de tous les Compagnies{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Rechercher une Compagnie</h4>
+                    <form method="get" action="{% url 'searchCompagnie' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="libelle">Libellé</label>
+
+                            <input type="text" class="form-control" placeholder="Libellé" name="libelle">
+
+                            <small class="text-muted">Veuillez eviter de saisir avec des erreurs en prenant la peine de vérifier votre texte avant de valider svp !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+            <div class="col-6">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Importer | Export</h4>
+                    <form method="post"  enctype="multipart/form-data" action="{% url 'importDataCompagnie' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="myfile">Mon Fichier CSV</label>
+
+                            <input type="file" class="form-control" placeholder="Choisir le fichier csv" name="myfile">
+
+                            <small class="text-muted">
+                                Veuillez uploader un fichier csv s'il vous plaît de peur d'obtenir un bug !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Importer des données</button>
+                        <a href="{% url 'exportCompagnieCSV' %}" class="btn btn-warning">Export en CSV</a>
+                        <a href="{% url 'exportCompagnieXLS' %}" class="btn btn-warning">Export en XLS</a>
+                        <a href="{% url 'exportCompagniePDF' %}" class="btn btn-warning">Export en PDF</a>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card-box">
+            <h4 class="header-title">Listing des Compagnies</h4>
+            <p class="sub-header">
+                Les différents compagnies du système sont répertoriés à cet endroit et permettent de connaitre les droits d'accès des utilisateurs du système.
+            </p>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Libelle</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for compagnie in compagnies %}
+                    <tr>
+                        <th scope="row">{{ compagnie.id }}</th>
+                        <td>{{ compagnie.libelle }}</td>
+                        <td>
+                            <a href="{% url 'checkCompagnie' compagnie.id %}" class="btn btn-xs btn-info">
+                                <i class=" mdi mdi-ubuntu"></i>
+                            </a>
+                        	<a href="{% url 'updateCompagnie' compagnie.id %}" class="btn btn-xs btn-warning">
+                        		<i class=" mdi mdi-pencil-off-outline"></i>
+                        	</a>
+                            <a href="{% url 'desactivateCompagnie' compagnie.id %}" class="btn btn-xs btn-danger">
+                                <i class=" mdi mdi-police-badge"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <br>
+
+
+                {% if compagnies.has_other_pages %}
+                <nav>
+                    <ul class="pagination">
+                        {% if compagnies.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ compagnies.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in compagnies.paginator.page_range %}
+                            {% if compagnies.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if compagnies.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ compagnies.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link disabled" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+        
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+    	<div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <h4 class="header-title mb-4">Formulaire d'ajout d'une Nouvelle Compagnie</h4>
+                    {% if messages %}
+			            {% for message in messages %}
+			            <div class="alert alert-{{ message.tags }}" role="alert">
+			                {{ message }}
+			            </div><br>
+			            {% endfor %}
+			        {% endif %}
+                    <form method="post" action="{% url 'createCompagnie' %}">
+                    	{% csrf_token %}
+                        <div class="form-group">
+
+                            <label for="libelle">Libellé</label>
+
+                            <input type="text" class="form-control" placeholder="Libellé" name="libelle">
+
+                            <br>
+
+                            <label for="abbreviation">Abbréviation</label>
+
+                            <input type="text" class="form-control" placeholder="Abbréviation" name="abbreviation">
+
+                            <br>
+
+                            <label for="telephone">Téléphone</label>
+
+                            <input type="text" class="form-control" placeholder="Téléphone" name="telephone">
+
+                            <br>
+
+                            <label for="fax">Fax</label>
+
+                            <input type="text" class="form-control" placeholder="Fax" name="fax">
+
+                            <br>
+
+                            <label for="email">Email</label>
+
+                            <input type="email" class="form-control" placeholder="Email" name="email">
+
+                            <br>
+
+                            <label for="siteweb">Site Web</label>
+
+                            <input type="text" class="form-control" placeholder="Site Web" name="siteweb">
+
+                            <br>
+
+                            <label for="adresse">Adresse</label>
+
+                            <textarea name="adresse" placeholder="Adresse" class="form-control" rows="10"></textarea>
+
+                            <small class="text-muted">Veuillez eviter de saisir avec des erreurs en prenant la peine de vérifier votre texte avant de valider svp !
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Soumettre</button>
+
+                    </form>
+                </div>
+                <br>
+
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+</div>
+<!--- end row -->
+
+
+
+{% endblock %}

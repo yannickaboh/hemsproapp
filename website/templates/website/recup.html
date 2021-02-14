@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    
+    <!-- HEMSPRO -->
+    <head>
+
+        <!-- Title -->
+        <title>HEMSPRO - LOGIN</title>
+
+        <!--Favicon -->
+        <link rel="icon" type="image/png" href="images/47.png" />
+
+        <!-- Required Meta Tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="HEMSPRO est une entreprise qui fait dans le placement de personnel, la pose de fibre optique et la maintenance des engins lourds.">
+        <meta name="keywords" content="HEMSPRO, Maintenance, Engins lourds, Gabon, Placement personnel, Pose fibre optique" />
+        <meta name="DJANGI CORP" content="2020">
+        <meta name="description" content="">
+        <meta name="author1" content="Yannick ABOH|Freelancer">
+        <meta name="tel" content="+241074835631">
+        <meta name="email" content="yannickabohthierry@gmail.com">
+        <meta name="author2" content="Arsène HAND|Freelancer">
+        <meta name="tel" content="+241074597513">
+        <meta name="email" content="arsenehand07@gmail.com">
+
+        <!-- Libs CSS -->
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/bootstrap/dist/css/bootstrap.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/font-awesome/css/all.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/themify-icons/css/themify-icons.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/slick/slick.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/vegas/vegas.min.css' %}">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/featherlight/featherlight.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/featherlight/featherlight.gallery.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'website/login/assets/vendor/aos/dist/aos.css' %}" type="text/css">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="{% static 'website/login/assets/css/theme.css' %}">
+        <link rel="stylesheet" href="{% static 'website/login/assets/css/utilities.css' %}">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'website/login/assets/css/custom.css' %}">
+
+    </head>
+
+    <body class="home-layout-left" data-spy="scroll" data-target="#siteMenuBody" data-offset="0">
+
+        <!-- Loader -->
+        <div class="loader bg-dark">
+          <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Chargement...</span>
+          </div>
+        </div>
+
+        <!-- Site Logo -->
+        <a href="#home" class="site-logo mt-4 mt-lg-5 ml-4 ml-lg-5" data-menu-base="site-logo-light" data-menu-scrolled="bg-white shadow-dark-lg site-logo-dark">
+          <img src="{% static 'website/login/assets/images/hems2.png' %}" class="site-logo-img-light" style="height: 40px;width: 40px;" />
+        </a>
+
+        
+
+        <!-- Button - Back to top -->
+        <a href="#" class="btn-back-to-top btn btn-icon btn-primary shadow-light mb-4 mb-lg-5 mr-4 mr-lg-5" tabindex="-1">
+          <i class="fas fa-chevron-up btn-icon-inner"></i>
+        </a>
+
+        <!-- Home Content -->
+        <div id="home" class="home-content" style="-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+          
+          <div class="overlay overlay-advanced">
+            <div class="overlay-inner slide-background overlay-media"></div>
+            <div class="overlay-inner bg-dark opacity-70"></div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+
+
+            <div class="container align-self-center px-lg-8 px-xl-10 py-14 py-lg-10 text-white text-center text-lg-center">
+
+              <h1 class="mb-5" data-aos="fade-up">
+                HEMSPRO <span class="font-weight-bold" data-toggle="typed" data-options='{"strings": ["", "MAD", "SPACE"]}'></span>
+              </h1>
+              <p class="lead mb-7" data-aos="fade-up" data-aos-delay="50">Les meilleurs services dans les domaines <strong>fibre optique</strong> , <strong>la maintenance des engins lourds</strong> et <strong>la mise à disposition de personnel</strong></p>
+              <div class="contact-form" data-aos="fade-up" data-aos-delay="200">
+
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div><br>
+                    {% endfor %}
+                {% endif %} 
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="form-row">
+
+                        <div class="form-process"></div>
+
+
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <input type="text" name="email" placeholder="Votre Email" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-4"></div>
+
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <input type="password" name="password" placeholder="Votre Mot de Passe" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-4"></div>
+
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 text-center">
+                          <button class="btn btn-soft-white" type="submit">Se Connecter</button>
+                        </div>
+                        <div class="col-md-4"></div>
+
+
+                    </div>
+
+                </form>
+
+
+                <div class="contact-form-result text-center"></div>
+              </div>
+
+              <br>
+
+
+              <!--a href="#about" class="btn btn-white mb-3 mb-sm-0 mr-sm-3 d-block d-sm-inline-block w-100 w-sm-auto scrollto" data-aos="fade-up" data-aos-delay="100">Learn more</a-->
+              <a href="#" class="btn btn-soft-white d-block d-sm-inline-block w-100 w-sm-auto">
+                <img src="{% static 'website/login/assets/images/hems2.png' %}" style="height: 80px;width: 80px;" />
+              </a>
+              <a href="#" class="btn btn-soft-white d-block d-sm-inline-block w-100 w-sm-auto">
+                <img src="{% static 'website/login/assets/images/mado.png' %}" style="height: 80px;width: 80px;" />
+              </a>
+              <a href="#" class="btn btn-soft-white d-block d-sm-inline-block w-100 w-sm-auto">
+                <img src="{% static 'website/login/assets/images/mainte.png' %}" style="height: 80px;width: 80px;" />
+              </a>
+
+            </div>
+
+
+
+        
+          </div>
+          <ul class="list-inline position-absolute bottom-0 left-0 mb-4 mb-lg-5 ml-4 ml-lg-5 zindex-555">
+
+            <li class="list-inline-item mx-0">
+              <a class="btn btn-sm btn-icon btn-soft-white" href="#!" tabindex="0">
+                <i class="fab fa-facebook-f btn-icon-inner"></i>
+              </a>
+            </li>
+
+            <li class="list-inline-item mx-0">
+              <a class="btn btn-sm btn-icon btn-soft-white" href="#!" tabindex="0">
+                <i class="fab fa-twitter btn-icon-inner"></i>
+              </a>
+            </li>
+
+            <li class="list-inline-item mx-0">
+              <a class="btn btn-sm btn-icon btn-soft-white" href="#!" tabindex="0">
+                <i class="fab fa-linkedin-in btn-icon-inner"></i>
+              </a>
+            </li>
+
+            <li class="list-inline-item mx-0">
+              <a class="btn btn-sm btn-icon btn-soft-white" href="#!" tabindex="0">
+                <i class="fab fa-dribbble btn-icon-inner"></i>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+
+
+        <!-- Subscribe Modal -->
+
+        <!-- Libs JS -->
+        <script src="{% static 'website/login/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/popper.js/dist/popper.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/jquery-form/dist/jquery.form.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/featherlight/featherlight.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/featherlight/jquery.detect_swipe.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/featherlight/featherlight.gallery.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/jquery.scrollTo/jquery.scrollTo.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/vegas/vegas.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/jQuery.countdown/dist/jquery.countdown.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/typed.js/typed.min.js' %}"></script>
+        <script src="{% static 'website/login/assets/vendor/aos/dist/aos.js' %}"></script>
+
+        <!-- Theme JS -->
+        <script src="{% static 'website/login/assets/js/main.js' %}"></script>
+
+        <script>
+        // Slideshow Background
+        if ($('.home-content .overlay-inner').hasClass('slide-background')) {
+          $('.home-content .overlay-inner.slide-background').vegas({
+            preload: true,
+            timer: 1000,
+            delay: 5000,
+            transition: 'slideLeft2',
+            transitionDuration: 4000,
+            firstTransition: 'none',
+            slides: [
+              { src: "{% static 'website/login/assets/images/photos/photo-10.jpg' %}" },
+              { src: "{% static 'website/login/assets/images/photos/photo-11.jpg' %}" },
+              { src: "{% static 'website/login/assets/images/photos/photo-7.jpg' %}" },
+              { src: "{% static 'website/login/assets/images/photos/photo-8.jpg' %}" },
+              { src: "{% static 'website/login/assets/images/photos/photo-9.jpg' %}" },
+              { src: "{% static 'website/login/assets/images/photos/photo-6.jpg' %}" }
+            ],
+            animation: 'kenburns',
+            animationDuration: 4000
+          });
+        }
+        </script>
+
+      </body>
+
+
+</html>
