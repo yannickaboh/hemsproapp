@@ -20,10 +20,6 @@ from django.template.loader import get_template
 #import render_to_pdf from util.py 
 from .utils import get_ip
 
-# For printing
-#from weasyprint import HTML
-from fpdf import FPDF, HTMLMixin
-
 # For import
 from tablib import Dataset
 
