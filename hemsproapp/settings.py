@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Token
+TOKEN = '11044981c61024fe736c17c730308be4d2cd246c'
+
 # Email Config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -132,15 +135,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/website/'
 
 # MEDIA FILES
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # IMPORT_EXPORT_USE_TRANSACTIONS = True
 IMPORT_EXPORT_USE_TRANSACTIONS = True
